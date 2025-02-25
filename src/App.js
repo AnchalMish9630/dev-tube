@@ -1,10 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import Body from './components/Body';
 
 function App() {
   return (
-    <div className="bg-yellow-50">
-     hello world
+    <div >
+     <Header />
+     <Body />
     </div>
   );
 }
