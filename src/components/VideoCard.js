@@ -1,5 +1,4 @@
 const VideoCard=({info})=>{
-    console.log(info, "hello ji kese ho aap");
     const { snippet = {}, statistics = {} } = info || {};
     const {thumbnails, title, channelTitle}= snippet;
     const {viewCount} = statistics;
@@ -19,3 +18,12 @@ const VideoCard=({info})=>{
     )
 }
 export default VideoCard;
+
+export const AdVideoCard = ({info})=>{
+    return(
+        <div className="shadow-lg border">
+            <VideoCard info={info} />
+            Ad.
+        </div>
+    )
+}
