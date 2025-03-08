@@ -6,8 +6,8 @@ const ButtonList = () => {
   return (
     <div className='flex flex-row'>
       {
-        listOfButton.map((buttonItem, key)=>
-          <Button name={buttonItem}/>
+        listOfButton.map((buttonItem, index)=>
+          <Button key={index} name={buttonItem}/>
         )
       }
     </div>
