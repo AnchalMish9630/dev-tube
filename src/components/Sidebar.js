@@ -13,7 +13,7 @@ const Sidebar = () => {
   console.log(showSideBar, "what's comming");
   return (
     
-    <div className="fixed  bg-white h-screen ">
+    <div className="fixed  bg-white h-screen  mt-10">
       {showSideBar ? (
         <div className="w-20 flex flex-col items-center py-5 gap-2">
         <Link to="/" className="flex flex-col items-center hover:bg-gray-200 p-3 rounded-md">
