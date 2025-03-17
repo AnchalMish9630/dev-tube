@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import {closeMenu} from '../utils/appSlice';
 import CommentsContainer from './CommentsContainer';
+import RecommandationCard from './RecommandationCard';
+import { useState } from 'react';
+import { YOUTUBE_VIDEOS_API } from '../utils/constant';
+import { Link } from 'react-router-dom';
 
 const WatchPage = () => {
   const [searchParam, setSearchParam]= useSearchParams();
@@ -14,12 +18,24 @@ const WatchPage = () => {
     dispatch(closeMenu());
   },
   )
+  const [videos, setVideos]= useState([]);
+    useEffect(()=>{
+      getVideoData();
+    },[]);
+  
+    const getVideoData = async ()=>{
+      const response = await fetch(YOUTUBE_VIDEOS_API);
+      const videoResponse = await response.json();
+      setVideos(videoResponse.items);
+      console.log(videoResponse.items);
+    }
   return (
+    <div>
     <div className='flex flex-col'>
-    <div className='pl-20 pt-8 mx-6 rounded-lg'>
+    <div className='pl-20 pt-8 mx-6 rounded-lg mt-12 -ml-3'>
       <iframe 
-        width="1000" 
-        height="500" 
+        width="640" 
+        height="360" 
         src={"https://www.youtube.com/embed/"+videoCode}
         title="YouTube video player" 
         frameBorder="0" 
@@ -30,6 +46,15 @@ const WatchPage = () => {
         ></iframe>
     </div>
     <CommentsContainer />
+    </div>
+    {
+        videos?.map((video, key)=>
+          <Link to={"/watch?v="+video.id}><RecommandationCard info={video} 
+                     key= {video.id} />
+                     </Link>
+        )
+      }
+    {/* <RecommandationCard /> */}
     </div>
   )
 }
