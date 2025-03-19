@@ -2,17 +2,28 @@ const VideoCard=({info})=>{
     const { snippet = {}, statistics = {} } = info || {};
     const {thumbnails, title, channelTitle}= snippet;
     const {viewCount} = statistics;
+
+    const formatViews = (count) => {
+        if (count >= 1e9) return (count / 1e9).toFixed(1) + "B";
+        if (count >= 1e6) return (count / 1e6).toFixed(1) + "M";
+        if (count >= 1e3) return (count / 1e3).toFixed(1) + "K";
+        return count;
+      };
+
     return(
-        <div className="p-2 m-2 w-64">
-             <img  className="rounded-lg py-2"
+        <div className="p-2 mx-2 mt-36 ">
+            <div className="w-[75%] md:w-[95%] font-sans">
+             <img  className="object-cover w-full h-60 rounded-xl hover:rounded-none"
             alt="video-thumbnail"
             src={thumbnails?.high?.url} 
            />
-           <ul>
-           <li className="font-bold">{title}</li>
-           <li>{channelTitle}</li>
-           <li>{viewCount}</li>
+           <ul className="flex flex-col mt-2 justify-between">
+           <li className="text-[1rem] font-semibold">
+            {title}</li>
+           <li className="text-[1rem] text-gray-500">{channelTitle}</li>
+           <li className="flex text-[1rem] text-gray-500"> {formatViews(Number(viewCount))} views</li>
            </ul>
+           </div>
         </div>
 
     )
