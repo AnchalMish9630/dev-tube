@@ -14,9 +14,11 @@ const VideoContainer = () => {
     const response = await fetch(YOUTUBE_VIDEOS_API);
     const videoResponse = await response.json();
     setVideos(videoResponse.items);
+    console.log(videoResponse.items);
   }
   return (
-    <div className='flex flex-wrap ml-8 mr-8' >
+    // <div className='flex flex-wrap ml-8 mr-8' >
+    <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-auto ml-16 md:ml-0  '>
       {
         videos[0] && <AdVideoCard info = {videos[0]} />
       }
