@@ -76,7 +76,7 @@ import React from 'react'
 const Comment = ({data})=>{
     const {name, text, replies}=data;
     return(
-        <div className='flex shadow-sm bg-gray-100'>
+        <div className='flex shadow-sm bg-gray-100 w-1/2'>
             <div className='p-2 rounded-lg'>
                 <img src="https://www.w3schools.com/howto/img_avatar.png" alt="avatar" className='h-8 w-8 rounded-full'/>
                 {name}{text}
@@ -91,7 +91,7 @@ const CommentsList = ({comments})=>{
           {comments?.map((comment, index)=> (
             <div>
                 <Comment key={index} data={comment} />
-          <div className='pl-5 border border-l-black  ml-5'>
+          <div className='pl-5 border border-l-black  ml-5 w-1/2'>
                 <CommentsList comments={comment.replies} />
           </div>
             </div>
