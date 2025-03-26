@@ -20,6 +20,11 @@ const appRouter = createBrowserRouter([
       path: "watch",
       element: <WatchPage />
     },
+    // for some other concept of react
+    {
+      path: "demo",
+      element: <DemoPage />
+    }
 ]
  }
   
