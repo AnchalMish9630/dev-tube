@@ -16,8 +16,8 @@ const VideoDescription = ()=>{
      console.log(videos[0]?.snippet?.channelTitle,"pint data");
 
     return(
-        <div className=" ml-16 mt-2 bg-gray-200 p-4 rounded-lg">
-            Hello I am VideoDescription
+        <div className=" ml-16 mt-2 bg-gray-200 p-4 rounded-lg w-[650px]">
+            {videos[0]?.snippet?.description}
         </div>
     )
 }
