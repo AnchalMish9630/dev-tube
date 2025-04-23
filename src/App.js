@@ -2,10 +2,12 @@ import './App.css';
 import Header from "./components/Header";
 import Body from './components/Body';
 import WatchPage from './components/WatchPage';
+import DemoPage from './components/DemoPage';
 import { Provider } from 'react-redux';
 import appStore from './utils/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
+import UserLogin from './components/UserLogin ';
 
 const appRouter = createBrowserRouter([
  {
@@ -19,6 +21,10 @@ const appRouter = createBrowserRouter([
     {
       path: "watch",
       element: <WatchPage />
+    },
+    {
+      path: "sign-in",
+      element: <UserLogin />
     },
     // for some other concept of react
     {
