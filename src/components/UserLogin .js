@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 export const UserLogin  = () => {
     const [isSignInForm , setIsSignInForm ] = useState(true);
+    const userEmail = useRef();
+    const userPassword = useRef();
     const [message, setMessage] = useState(null);
     const handleSignInForm = ()=>{
         setIsSignInForm(!isSignInForm);
@@ -32,21 +34,21 @@ export const UserLogin  = () => {
                      />
                     }
                     <input 
-                    // ref={email}
+                    ref={userEmail}
                            type="text"
                            placeholder="Enter email address" 
                            className="p-4 my-4 w-full bg-[#464657] rounded-md" 
                     />
                     <input 
-                    //  ref={password}   // by this get the refrence of the input box.
+                     ref={userPassword}   // by this get the refrence of the input box.
                             type="password" 
                             placeholder="Enter password" 
                             className="p-4 my-4 w-full bg-[#464657] rounded-md"
                     />
-                   <p className="font-bold text-lg text-[#464657] py-2">{message}</p>
+                   <p className="font-bold text-lg text-white py-2">{message}</p>
                     <button 
                             className="p-4 my-6 w-full rounded-lg bg-red-700"
-                            // onClick={handleButtonClick}
+                             onClick={handleButtonClick}
                         >
                          {
                             isSignInForm ? "Sign in" : "Sign up" 
