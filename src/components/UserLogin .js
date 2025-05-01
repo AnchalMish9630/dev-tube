@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import { ValidateData } from '../utils/validateData';
 
 export const UserLogin  = () => {
     const [isSignInForm , setIsSignInForm ] = useState(true);
@@ -7,6 +8,16 @@ export const UserLogin  = () => {
     const [message, setMessage] = useState(null);
     const handleSignInForm = ()=>{
         setIsSignInForm(!isSignInForm);
+    }
+    const handleButtonClick = ()=>{
+        const ValidationMsg= ValidateData(userEmail.current.value, userPassword.current.value)
+        if(ValidationMsg){
+            setMessage(ValidationMsg);
+        }
+        else{
+            console.log("Successfull,............")
+        }
+        // console.log(userEmail.current.value, userPassword.current.value, "is set now , do work....")
     }
   return (
     <div>
