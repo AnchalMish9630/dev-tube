@@ -2,28 +2,31 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { MdHome } from 'react-icons/md';
+import { lang } from '../utils/i18n';
 import { FaHistory } from 'react-icons/fa';
 import { MdSubscriptions } from 'react-icons/md';
 import { BiSolidVideos } from 'react-icons/bi';
 import { toggleMenu } from '../utils/appSlice'; // Import the action that toggles the menu
+import { LANGUAGE_KEYS } from '../utils/i18n/languageKeys';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const isMenuOpen = useSelector((state) => state.app.isMenuOpen);
   const location = useLocation();
   const isWatchPage = location.pathname.includes('/watch');
+  const langCode = useSelector((store)=>store.config.lang)
 
   const menuItem = [
-    { icon : <MdHome size={24} />, lable: "Home", link: '/' },
-    { icon : <FaHistory size={24} />, lable: 'History', link: '/' },
-    { icon : <MdSubscriptions size={24} />, lable: 'Subscriptions', link: '/' },
-    { icon : <BiSolidVideos size={24} />, lable: 'Liked Videos', link: '/' },
+    { icon : <MdHome size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HOME], link: '/' },
+    { icon : <FaHistory size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HISTORY], link: '/' },
+    { icon : <MdSubscriptions size={24} />, lable: lang[langCode][LANGUAGE_KEYS.SUBSCRIPTION], link: '/' },
+    { icon : <BiSolidVideos size={24} />, lable: lang[langCode][LANGUAGE_KEYS.LIKED_VIDEOS], link: '/' },
   ]
   const sideBarItem = [
-    { icon : <MdHome size={24} />, lable: "Home", link: '/' },
-    { icon : <FaHistory size={24} />, lable: 'History', link: '/' },
-    { icon : <MdSubscriptions size={24} />, lable: 'Subscriptions', link: '/' },
-    { icon : <BiSolidVideos size={24} />, lable: 'Liked Videos', link: '/' },
+    { icon : <MdHome size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HOME], link: '/' },
+    { icon : <FaHistory size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HISTORY], link: '/' },
+    { icon : <MdSubscriptions size={24} />, lable: lang[langCode][LANGUAGE_KEYS.SUBSCRIPTION], link: '/' },
+    { icon : <BiSolidVideos size={24} />, lable: lang[langCode][LANGUAGE_KEYS.LIKED_VIDEOS], link: '/' },
   ]
 
 
