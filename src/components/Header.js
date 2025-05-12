@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { useEffect, useState } from "react";
-import { MENU_ICON, USER_IMG, YOUTUBE_LOGO, YOUTUBE_SEARCH_API } from "../utils/constant";
+import { MENU_ICON, SUPPORTED_LANG, USER_IMG, YOUTUBE_LOGO, YOUTUBE_SEARCH_API } from "../utils/constant";
 import { cacheResult } from "../utils/searchSlice";
 import { useNavigate } from "react-router-dom";
+import { lang } from "../utils/i18n";
+import { changeLang } from "../utils/configSlice";
+import { LANGUAGE_KEYS } from "../utils/i18n/languageKeys";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +18,12 @@ const Header = () => {
   const handleToggleMenu = () => {
     dispatch(toggleMenu());
   };
+  
+  const handleLanguageChange = (e) => {
+    dispatch(changeLang(e.target.value));
+  };
+
+  const langCode = useSelector((store)=>store.config.lang)
 
   const getSearchSuggestion = async () => {
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
@@ -69,7 +78,7 @@ const Header = () => {
             onBlur={() => setShowSuggestion(false)}
           />
           <button className="border border-gray-400 rounded-r-full w-16 h-10  bg-gray-200 text-center cursor-pointer">
-            Search
+            {lang[langCode].search}
           </button>
         </div>
 
@@ -86,6 +95,15 @@ const Header = () => {
           </div>
         )}
       </div>
+      <div className="flex flex-col" >
+       <select onChange={handleLanguageChange}>
+        {
+          SUPPORTED_LANG.map((lang)=>{
+           return  <option value={lang.identifier}>{lang.name}</option>
+          })
+        }
+       </select>
+      </div>
       <button 
         // onClick={()=>{navigate("/watch")
         //   // navigate("/browse");
@@ -96,7 +114,7 @@ const Header = () => {
           src={USER_IMG}
           />
         <text className="hidden md:inline-block pr-2 py-2 rounded-full h-10 m-2 ">
-          Sign in
+          {lang[langCode][LANGUAGE_KEYS.SIGN_IN]}
         </text>
       </button>
       <div></div>
