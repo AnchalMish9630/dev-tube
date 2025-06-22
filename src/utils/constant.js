@@ -16,6 +16,8 @@ export const SUPPORTED_LANG = [
     {identifier: "hi", name: "हिंदी"},
 ]
 
+export const LIVE_CHAT_COUNT = 150;
+
 
 
 
