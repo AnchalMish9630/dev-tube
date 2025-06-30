@@ -11,7 +11,7 @@ const VideoCard=({info})=>{
       };
 
     return(
-        <div className="p-2 mx-2 mt-36 ">
+        <div className="p-2 mx-2 md:mt-36 mt-10">
             <div className="w-[75%] md:w-[95%] font-sans">
              <img  className="object-cover w-full h-60 rounded-xl hover:rounded-none"
             alt="video-thumbnail"
