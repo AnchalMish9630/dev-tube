@@ -7,7 +7,7 @@ const searchSlice = createSlice({
         state = Object.assign(state, action.payload);
 
   },
-}
+  }
 });
 
 export const {cacheResult} = searchSlice.actions;
