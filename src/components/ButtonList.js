@@ -40,13 +40,14 @@ const ButtonList = () => {
   ];
   console.log(tranlaation, "helloreducers:")
   return (
-    <div className='flex w-full items-center bg-white static lg:fixed lg:top-16 border-t-gray-300 h-16'>
-      {
-        listOfButtons.map((buttonItem, index)=>
-          <Button key={index} name={lang[tranlaation]?.[buttonItem] || buttonItem}/>
-        )
-      }
-    </div>
+    <div className="flex w-full items-center bg-white lg:fixed lg:top-16 border-t-gray-300 md:h-16  
+                           overflow-x-auto whitespace-nowrap scrollbar-hide md:px-2 px-0">
+  {
+    listOfButtons.map((buttonItem, index) =>
+      <Button key={index} name={lang[tranlaation]?.[buttonItem] || buttonItem} />
+    )
+  }
+</div>
   )
 }
 
