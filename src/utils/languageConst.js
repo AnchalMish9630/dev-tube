@@ -1,5 +1,5 @@
 
-const lang = {
+export const lang = {
     en:{
         home: "Home",
         history: "History",
