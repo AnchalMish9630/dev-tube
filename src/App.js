@@ -8,6 +8,7 @@ import appStore from './utils/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
 import UserLogin from './components/UserLogin ';
+import SearchPage from './components/SearchPage';
 
 const appRouter = createBrowserRouter([
  {
@@ -30,6 +31,10 @@ const appRouter = createBrowserRouter([
     {
       path: "demo",
       element: <DemoPage />
+    },
+    {
+      path: "search",
+      element: <SearchPage />
     }
 ]
  }
@@ -40,7 +45,8 @@ function App() {
 
       <Provider store={appStore}>
         <div>
-     <Header />
+      
+     {/* <Header /> */}
      <RouterProvider router={appRouter} />
      </div>
      </Provider>
