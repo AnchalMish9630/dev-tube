@@ -36,7 +36,7 @@ export const AdVideoCard = ({info})=>{
     return(
         <div className="shadow-lg border">
             <VideoCard info={info} />
-            Ad.
+            Ad card.
         </div>
     )
 }
