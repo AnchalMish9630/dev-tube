@@ -69,7 +69,7 @@ const LiveChat = () => {
   );
 };
 
-export default LiveChat;
+// export default LiveChat;
 
 // first create liveChat and msg component 
 // now store your single comment in store by creating a chatslice

@@ -1,77 +1,75 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { MdHome } from 'react-icons/md';
-import { lang } from '../utils/i18n';
-import { FaHistory } from 'react-icons/fa';
-import { MdSubscriptions } from 'react-icons/md';
-import { BiSolidVideos } from 'react-icons/bi';
-import { toggleMenu } from '../utils/appSlice'; // Import the action that toggles the menu
-import { LANGUAGE_KEYS } from '../utils/i18n/languageKeys';
+import React, { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleMenu } from "../utils/appSlice";
+import { Link, useLocation } from "react-router-dom";
+import { MdHome, MdSubscriptions } from "react-icons/md";
+import { FaHistory } from "react-icons/fa";
+import { BiSolidVideos } from "react-icons/bi";
+import { ThemeContext } from "../context/ThemeComponent";
 
 const Sidebar = () => {
-  const dispatch = useDispatch();
   const isMenuOpen = useSelector((state) => state.app.isMenuOpen);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const isWatchPage = location.pathname.includes('/watch');
-  const langCode = useSelector((store)=>store.config.lang)
+  const {theme } = useContext(ThemeContext);
 
-  const menuItem = [
-    { icon : <MdHome size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HOME], link: '/' },
-    { icon : <FaHistory size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HISTORY], link: '/' },
-    { icon : <MdSubscriptions size={24} />, lable: lang[langCode][LANGUAGE_KEYS.SUBSCRIPTION], link: '/' },
-    { icon : <BiSolidVideos size={24} />, lable: lang[langCode][LANGUAGE_KEYS.LIKED_VIDEOS], link: '/' },
-  ]
-  const sideBarItem = [
-    { icon : <MdHome size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HOME], link: '/' },
-    { icon : <FaHistory size={24} />, lable: lang[langCode][LANGUAGE_KEYS.HISTORY], link: '/' },
-    { icon : <MdSubscriptions size={24} />, lable: lang[langCode][LANGUAGE_KEYS.SUBSCRIPTION], link: '/' },
-    { icon : <BiSolidVideos size={24} />, lable: lang[langCode][LANGUAGE_KEYS.LIKED_VIDEOS], link: '/' },
-  ]
-
-
-  const closeMenu = () => {
-    dispatch(toggleMenu());
-  };
-
-  if (isWatchPage && !isMenuOpen) return null;
+  const items = [
+    { icon: <MdHome size={24} />, label: "Home", path: "/" },
+    { icon: <FaHistory size={24} />, label: "History", path: "/history" },
+    { icon: <MdSubscriptions size={24} />, label: "Subscriptions", path: "/subs" },
+    { icon: <BiSolidVideos size={24} />, label: "Videos", path: "/videos" },
+  ];
 
   return (
     <>
-      {/* Overlay for background shading */}
+      {/* 💻 Desktop Sidebar (toggleable) */}
       {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={closeMenu}
-        />
+        <>
+          {/* Overlay for Desktop */}
+          <div
+            className={`hidden md:block fixed inset-0  bg-opacity-30 z-40
+               
+            `}
+            onClick={() => dispatch(toggleMenu())}
+          />
+          <div
+            className={`
+             ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white"}
+              hidden md:flex flex-col fixed top-14 left-0 w-60 h-[calc(100%-3.5rem)] 
+              shadow-lg z-50
+            `}
+          >
+            {items.map((item, index) => (
+              <Link
+                to={item.path}
+                key={index}
+                className={`flex items-center px-4 py-2  
+                  ${theme === "dark" ? "hover:bg-gray-600 text-white" : "hover:bg-gray-100"}
+                  ${location.pathname === item.path ? "bg-gray-200 font-semibold" : ""
+                }`}
+              >
+                {item.icon}
+                <span className="ml-3">{item.label}</span>
+              </Link>
+            ))}
+          </div>
+        </>
       )}
 
-      {/* Sidebar */}
-      <div
-        className={`fixed bg-white h-screen mt-16 transition-all duration-300 z-50 ${isMenuOpen ? 'w-60' : 'w-20'} shadow-lg`}
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the sidebar
-      >
-        {isMenuOpen ? (
-          <div className="flex flex-col items-start py-5 gap-2">
-            {sideBarItem.map((item)=>
-            <Link to="/" className="flex items-center gap-3 pl-2 py-2 pr-8 m-3 hover:bg-gray-200 rounded-md">
-              {item.icon}
-            <p>{item.lable}</p>
-            </Link>
-            )}  
-          </div>
-        ) : (
-          <div className="w-20 flex flex-col items-center py-5 gap-2">
-             {
-              menuItem.map((item)=>
-              <Link to="/" className="flex flex-col items-center hover:bg-gray-200 p-3 rounded-md ">
-                {item.icon}
-              <p className="text-[10px]">{item.lable}</p>
-            </Link>
-              )
-            }
-            </div>
-        )}
+      {/* 📱 Mobile Bottom Nav (Always visible) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white shadow-inner flex justify-around items-center z-50">
+        {items.map((item, index) => (
+          <Link
+            to={item.path}
+            key={index}
+            className={`flex flex-col items-center text-xs ${
+              location.pathname === item.path ? "text-blue-600 font-medium" : "text-gray-600"
+            }`}
+          >
+            {item.icon}
+            <span className="text-[10px]">{item.label}</span>
+          </Link>
+        ))}
       </div>
     </>
   );

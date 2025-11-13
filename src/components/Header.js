@@ -8,12 +8,14 @@ import { lang } from "../utils/i18n";
 import { changeLang } from "../utils/configSlice";
 import { LANGUAGE_KEYS } from "../utils/i18n/languageKeys";
 import { FaSearch } from "react-icons/fa";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeComponent";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionResult, setSuggestionResult] = useState([]);
   const [showSuggestion, setShowSuggestion] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const searchCache = useSelector((store) => store.search);
   const handleToggleMenu = () => {
@@ -37,20 +39,31 @@ const Header = () => {
   // };
 
   // useEffect(() => {
-  //   {
-  //     if (searchCache[searchQuery]) {
-  //       setSuggestionResult(searchCache[searchQuery]);
-  //     } else {
-  //       const timer = setTimeout(() => getSearchSuggestion(), 200);
+    // {
+    //   if (searchCache[searchQuery]) {
+    //     setSuggestionResult(searchCache[searchQuery]);
+    //   } else {
+        // const timer = setTimeout(() => getSearchSuggestion(), 200);
   //       return () => {
   //         clearTimeout(timer);
   //       };
   //     }
   //   }
-  // }, [searchQuery, searchCache]); // Trigger whenever searchQuery or searchCache changes
+  // }, [searchQuery, searchCache]); 
+  // Trigger whenever searchQuery or searchCache changes
+
+  const suggestionOnClick = (suggestion) => {
+    navigate(`/search?q=${suggestion}`);
+  };
+
+  const {theme, handleToggleTheme} = useContext(ThemeContext);
+
 
   return (
-    <div className=" flex w-full justify-between items-center md:px-6 font-semibold px-1 static z-20 lg:fixed bg-white md:border-none border-b border-gray-200">
+    <div className={`flex w-full justify-between items-center md:px-6 font-semibold px-1 lg:fixed  md:border-none border-b border-gray-200
+    fixed top-0 left-0 right-0 z-50 
+    ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white"}
+    `}>
       <div className="w-[10rem] flex flex-nowrap">
         <img
           className="hidden md:inline-block w-9 h-12 pt-4 cursor-pointer"
@@ -69,27 +82,34 @@ const Header = () => {
       <div className="hidden md:flex flex-nowrap">
         <div>
           <input
-            className=" border focus:outline-blue-200 border-gray-400 rounded-l-full p-4 h-10 lg:w-[30rem] [@media(max-width:768px)]:w-[10rem] md:w-[15rem]"
+            className={`
+              ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200"}
+              border focus:outline-blue-200 border-gray-400 rounded-l-full p-4 h-10 lg:w-[30rem] [@media(max-width:768px)]:w-[10rem] md:w-[15rem]`}
             type="text"
             value={searchQuery}
+            placeholder="What's you want to watch today?..."
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
             onFocus={() => setShowSuggestion(true)}
             onBlur={() => setShowSuggestion(false)}
           />
-          <button className="border border-gray-400 rounded-r-full w-16 h-10  bg-gray-200 text-center cursor-pointer">
+          <button className={`border border-gray-400 rounded-r-full w-16 h-10 
+          ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200"}
+           text-center cursor-pointer`} onClick={() =>
+            { 
+              navigate(`/search?q=${searchQuery}`); 
+              } }>
             {lang[langCode].search}
           </button>
         </div>
         
-
         {showSuggestion && (
           <div className="fixed bg-white border border-gray-200 py-2 px-5 w-96 shadow-lg rounded-lg mt-10  lg:w-[30rem] [@media(max-width:768px)]:w-[10rem] md:w-[15rem]" >
             <ul>
               {suggestionResult &&
                 suggestionResult.map((suggestion, index) => (
-                  <li className="shadow-sm py-2" key={index}>
+                   <li className="shadow-sm py-2" key={index} onClick={() => suggestionOnClick(suggestion)}>
                     {suggestion}
                   </li>
                 ))}
@@ -104,8 +124,12 @@ const Header = () => {
     <FaSearch size={20} />
   </button>
 </div>
-      <div className="hidden md:flex flex-col" >
-       <select onChange={handleLanguageChange}>
+      <div className={`hidden md:flex flex-col 
+      `}>
+       <select 
+        className={`${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200"}
+      `}
+       onChange={handleLanguageChange}>
         {
           SUPPORTED_LANG.map((lang)=>{
            return  <option value={lang.identifier}>{lang.name}</option>
@@ -126,6 +150,7 @@ const Header = () => {
           {lang[langCode][LANGUAGE_KEYS.SIGN_IN]}
         </text>
       </button>
+        <button onClick={ handleToggleTheme}>{theme === "light"?"dark": "light"}</button>
       <div></div>
     </div>
   );
