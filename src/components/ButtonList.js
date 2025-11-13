@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from './Button';
 import { useSelector } from 'react-redux';
 // import { lang } from '../utils/languageConst';
 import { LANGUAGE_KEYS } from '../utils/i18n/languageKeys';
 import { lang } from '../utils/i18n';
+import { ThemeContext } from '../context/ThemeComponent';
 
 
 const ButtonList = () => {
    const tranlaation = useSelector((store)=>{
     return store.config.lang
   })
+  const {theme} = useContext(ThemeContext)
   // const listOfButton = [
   //   "all",
   //   "music",
@@ -40,8 +42,11 @@ const ButtonList = () => {
   ];
   console.log(tranlaation, "helloreducers:")
   return (
-    <div className="flex w-full items-center bg-white lg:fixed lg:top-16 border-t-gray-300 md:h-16  
-                           overflow-x-auto whitespace-nowrap scrollbar-hide md:px-2 px-0">
+    <div className={`flex w-full items-center
+    ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200"}
+     lg:fixed lg:top-16 border-t-gray-300 md:h-16  
+                           overflow-x-auto whitespace-nowrap scrollbar-hide md:px-2 px-0`}
+                           >
   {
     listOfButtons.map((buttonItem, index) =>
       <Button key={index} name={lang[tranlaation]?.[buttonItem] || buttonItem} />

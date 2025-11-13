@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { YOUTUBE_VIDEOS_API } from '../utils/constant';
 import VideoCard from './VideoCard';
 import { Link } from 'react-router-dom';
 import { AdVideoCard } from './VideoCard';
+import { ThemeContext } from '../context/ThemeComponent';
 
 const VideoContainer = () => {
   const [videos, setVideos]= useState([]);
   useEffect(()=>{
     getVideoData();
   },[]);
+
+  const {theme, handleToggleTheme} = useContext(ThemeContext);
 
   const getVideoData = async ()=>{
     const response = await fetch(YOUTUBE_VIDEOS_API);
@@ -21,7 +24,11 @@ const VideoContainer = () => {
   }
   return (
     // <div className='flex flex-wrap ml-8 mr-8' >
-    <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-auto md:ml-16 ml-4 gap-4 md:mt-16 mt-4 '>
+    
+    <div className = { `grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-auto md:ml-16 ml-4 gap-4 md:mt-16 mt-4  
+     ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white"}`}
+    >
+      
       {
         videos[0] && <AdVideoCard info = {videos[0]} />
       }

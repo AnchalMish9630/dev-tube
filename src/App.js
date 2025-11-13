@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainContainer from './components/MainContainer';
 import UserLogin from './components/UserLogin ';
 import SearchPage from './components/SearchPage';
+import { ThemeContextProvider } from './context/ThemeComponent';
 
 const appRouter = createBrowserRouter([
  {
@@ -43,6 +44,7 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
 
+    <ThemeContextProvider>
       <Provider store={appStore}>
         <div>
       
@@ -50,6 +52,7 @@ function App() {
      <RouterProvider router={appRouter} />
      </div>
      </Provider>
+     </ThemeContextProvider> 
  
   );
 }
